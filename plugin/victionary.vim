@@ -50,4 +50,12 @@ function! s:WordPrompt()
 	call s:Lookup(word)
 endfunction
 
-noremap <Leader>d :call <SID>WordPrompt()<CR>
+if !exists('g:victionary_mapping')
+	let g:victionary_mapping = 1
+endif
+
+if g:victionary_mapping
+	nnoremap <unique> <Leader>d :call <SID>WordPrompt()<CR>
+endif
+
+command! -nargs=1 Victionary :call <SID>Lookup(<f-args>)
