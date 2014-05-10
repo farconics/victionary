@@ -12,9 +12,11 @@ For easy installation, I highly suggest that you install a plugin manager (ie. P
 # Usage
 
 The hotkey for triggering the plugin is:
+
 	<Leader>d
 
 If you'd like to change the custom mapping, add this to your .vimrc:
+
 	let g:victionary_mapping = 0
 	nnoremap <mapping> :call <SID>WordPrompt()<CR>
 
