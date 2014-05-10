@@ -13,8 +13,8 @@ For easy installation, I highly suggest that you install a plugin manager (ie. P
 
 # Configuration
 
-Right now, the plugin uses 'dict.org' along with the WordNet dictionary.
-Will try to add the option to specify a host and dictionary in the future.
+The plugin works out of the box, using 'dict.org' as the host and WordNet as dictionary.
+I will try to add the option to specify a host and dictionary in the future.
 
 # Usage
 
