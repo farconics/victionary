@@ -6,7 +6,7 @@ An easy to use dict client for Vim.
 
 # Requirements
 
-* `Ruby 1.9.2 or greater`
+* `Vim compiled w/ Ruby 1.9.2 or greater`
 
 # Installation
 
