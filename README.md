@@ -1,5 +1,4 @@
 Victionary
 ==========
-****
 
-	An easy-to-use dict client for Vim.
+An easy to use dict client for Vim.
