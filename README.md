@@ -2,6 +2,8 @@
 
 An easy to use dict client for Vim.
 
+![img](https://camo.githubusercontent.com/16abd39a97eedd2a195348d72e4d7dd34a5bf836/687474703a2f2f692e696d6775722e636f6d2f4c47697365444b2e676966)
+
 # Installation
 
 For easy installation, I highly suggest that you install a plugin manager (ie. Pathogen/Vundle/NeoBundle)
