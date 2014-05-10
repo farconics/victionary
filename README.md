@@ -6,7 +6,7 @@ An easy to use dict client for Vim.
 
 For easy installation, I highly suggest that you install a plugin manager (ie. Pathogen/Vundle/NeoBundle)
 
-* Pathogen
+* Pathogen[1]
 	* `git clone https://github.com/farconics/victionary ~/.vim/bundle/victionary`
 
 # Usage
