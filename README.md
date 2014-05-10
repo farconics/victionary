@@ -4,6 +4,10 @@ An easy to use dict client for Vim.
 
 ![img](https://github.com/farconics/victionary/wiki/images/demo.gif)
 
+# Requirements
+
+* `Ruby 1.9.2 or greater`
+
 # Installation
 
 For easy installation, I highly suggest that you install a plugin manager (ie. Pathogen/Vundle/NeoBundle)
