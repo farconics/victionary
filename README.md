@@ -34,4 +34,8 @@ If you'd like to change the custom mapping, add this to your .vimrc:
 Looking up a word will open a horizontal split at the bottom, simply press q
 to close the window.
 
+# Examples
+
+![img](https://github.com/farconics/victionary/wiki/images/demo2.gif)
+
 [1]: https://github.com/tpope/vim-pathogen
