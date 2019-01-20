@@ -2,7 +2,7 @@
 " Vim plugin for looking up words in an online dictionary (ie. WordNet)
 " A fork of the vim-online-thesaurus plugin
 " Author:	Jose Francisco Taas, Evan Quan
-" Version: 2.0.0
+" Version: 3.0.0
 " Credits to both Anton Beloglazov and Nick Coleman: original idea and code
 " And to Dave Pearson: RFC 2229 client for ruby
 " NOTE: This is a very hackish implementation since I didn't originally
@@ -18,29 +18,30 @@ let s:dictpath = s:path . '/dict.rb'
 let g:victionary#WORD_NET = "wn"
 let g:victionary#GCIDE = "gcide"
 
-let s:database_names = {
-                      \ g:victionary#WORD_NET : "WordNet",
-                      \ g:victionary#GCIDE : "GCIDE",
-                      \}
-
-if !exists("g:victionary#database")
-	" let g:victionary#database =  g:victionary#WORD_NET
-	let g:victionary#database =  g:victionary#GCIDE
-endif
-
 let s:thesaurus = "moby-thesaurus"
+
+let s:dictionary_names = {
+                       \ g:victionary#WORD_NET : "WordNet",
+                       \ g:victionary#GCIDE : "GCIDE",
+                       \ s:thesaurus : "Moby Thesaurus",
+                       \}
+
+if !exists("g:victionary#dictionary")
+	let g:victionary#dictionary =  g:victionary#WORD_NET
+	" let g:victionary#dictionary =  g:victionary#GCIDE
+endif
 
 function! s:GetThesaurus()
 	return s:thesaurus
 endfunction
 
-function! s:Lookup(word, database)
+function! s:Lookup(word, dictionary)
 	silent keepalt belowright split victionary
 	setlocal noswapfile nobuflisted nospell nowrap modifiable
 	setlocal buftype=nofile bufhidden=hide
 	1,$d
-	echo "Fetching " . a:word . " from the " . s:database_names[a:database] . " dictionary..."
-	exec "silent 0r !" . s:dictpath . " -d " . a:database . " " . a:word
+	echo "Fetching " . a:word . " from the " . s:dictionary_names[a:dictionary] . " dictionary..."
+	exec "silent 0r !" . s:dictpath . " -d " . a:dictionary . " " . a:word
 	normal! ggiWord: 
 ruby << EOF
 	@buffer = VIM::Buffer.current
@@ -57,7 +58,7 @@ EOF
 	setlocal nomodifiable filetype=victionary
 endfunction
 
-function! s:WordPrompt(prompt, database)
+function! s:WordPrompt(prompt, dictionary)
 	call inputsave()
 	let word = input(a:prompt . ': ')
 	call inputrestore()
@@ -65,17 +66,17 @@ function! s:WordPrompt(prompt, database)
 		return
 	end
 	redraw
-	call s:Lookup(word, a:database)
+	call s:Lookup(word, a:dictionary)
 endfunction
 
 if !exists('g:victionary#map_defaults')
 	let g:victionary#map_defaults = 1
 endif
 
-nnoremap <Plug>(victionary#define_prompt) :call <SID>WordPrompt('Define word', g:victionary#database)<Return>
-nnoremap <Plug>(victionary#define_under_cursor) :call <SID>Lookup('<C-r><C-w>', g:victionary#database)<Return>
+nnoremap <Plug>(victionary#define_prompt) :call <SID>WordPrompt('Define word', g:victionary#dictionary)<Return>
+nnoremap <Plug>(victionary#define_under_cursor) :call <SID>Lookup('<C-r><C-w>', g:victionary#dictionary)<Return>
 
-nnoremap <Plug>(victionary#synonym_prompt) :call <SID>WordPrompt('Get synonym', <SID>GetThesaurus())<Return>
+nnoremap <Plug>(victionary#synonym_prompt) :call <SID>WordPrompt('Get synonyms', <SID>GetThesaurus())<Return>
 nnoremap <Plug>(victionary#synonym_under_cursor) :call <SID>Lookup('<C-r><C-w>', <SID>GetThesaurus())<Return>
 
 if g:victionary#map_defaults
@@ -85,7 +86,7 @@ if g:victionary#map_defaults
 	nnoremap <unique> <Leader>S <Plug>(victionary#synonym_under_cursor)
 endif
 
-command! -nargs=1 VictionaryDefine :call <SID>Lookup(<f-args>, g:victionary#database)
+command! -nargs=1 VictionaryDefine :call <SID>Lookup(<f-args>, g:victionary#dictionary)
 command! -nargs=1 VictionarySynonym :call <SID>Lookup(<f-args>, <SID>GetThesaurus())
 
 let g:victionary#loaded = 1
