@@ -26,7 +26,8 @@ An easy to use dict client for Vim.
 
 ## Installation
 
-For easy installation, I highly suggest that you install a plugin manager (ie. Pathogen/Vundle/NeoBundle)
+For easy installation, I highly suggest that you install a plugin manager (ie.
+Pathogen/Vundle/NeoBundle)
 
 * Vim 8 Native Package Manager
 ```bash

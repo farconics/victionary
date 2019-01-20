@@ -16,13 +16,23 @@
 ==============================================================================
 CONTENTS                                                   *victionary-contents*
 
-    1. Configuration....................|victionary-configuration|
-    2. Usage............................|victionary-usage|
-        2.1. Mappings...................|victionary-mappings|
-        2.2. Commands...................|victionary-commands|
+    1. Introduction.....................|victionary-introduction|
+    2. Configuration....................|victionary-configuration|
+    3. Usage............................|victionary-usage|
+        3.1. Mappings...................|victionary-mappings|
+        3.2. Commands...................|victionary-commands|
 
 ==============================================================================
-1. Configuration                                      *victionary-configuration*
+1. Introduction                                        *victionary-introduction*
+
+Victionary is an easy to use dictionary client for Vim. It provides a quick
+way to find the definitions and synonyms of words without leaving your
+favorite text editor! You can find the most updated version of this plugin at:
+
+        https://github.com/farconics/victionary/
+
+==============================================================================
+2. Configuration                                      *victionary-configuration*
 
 The plugin works out of the box, using 'dict.org' as the host and WordNet as
 the dictionary. I will try to add the option to specify a host.
@@ -39,10 +49,10 @@ are currently 2 options, which you can set in your |.vimrc|: >
         let g:victionary#dictionary = g:victionary#GCIDE
 <
 ==============================================================================
-2. Usage                                                      *victionary-usage*
+3. Usage                                                      *victionary-usage*
 
 ------------------------------------------------------------------------------
-2.1. Mappings                                              *victionary-mappings*
+3.1. Mappings                                              *victionary-mappings*
 
 <Plug>(victionary#define_prompt)              *<Plug>(victionary#define_prompt)*
 
@@ -84,7 +94,7 @@ If you'd like to customize the mappings, add this to your |.vimrc|: >
         nmap <mapping> <Plug>(victionary#synonym_under_cursor)
 <
 ------------------------------------------------------------------------------
-2.2. Commands                                              *victionary-commands*
+3.2. Commands                                              *victionary-commands*
 
 :VictionaryDefine [word]                                     *:VictionaryDefine*
 
