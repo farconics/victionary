@@ -61,6 +61,12 @@ let g:victionary#dictionary = g:victionary#GCIDE
 
 # Usage
 
+You can read the help docs for this plugin at any time with:
+
+```vim
+:help victionary
+```
+
 ### Mappings
 
 `<Plug>(victionary#define_prompt)`

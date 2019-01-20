@@ -1,0 +1,103 @@
+*victionary.txt*        For Vim version 8.1         Last change: 2019 January 04
+
+                 _   _ _      _   _~
+                | | | (_)    | | (_)~
+                | | | |_  ___| |_ _  ___  _ __   __ _ _ __ _   _~
+                | | | | |/ __| __| |/ _ \| '_ \ / _` | '__| | | |~
+                \ \_/ / | (__| |_| | (_) | | | | (_| | |  | |_| |~
+                 \___/|_|\___|\__|_|\___/|_| |_|\__,_|_|   \__, |~
+                                                            __/ |~
+                    An easy to use dict client for Vim.    |___/ ~
+
+                                            ~
+                             Reference Manual                                  ~
+
+
+==============================================================================
+CONTENTS                                                   *victionary-contents*
+
+    1. Configuration....................|victionary-configuration|
+    2. Usage............................|victionary-usage|
+        2.1. Mappings...................|victionary-mappings|
+        2.2. Commands...................|victionary-commands|
+
+==============================================================================
+1. Configuration                                      *victionary-configuration*
+
+The plugin works out of the box, using 'dict.org' as the host and WordNet as
+the dictionary. I will try to add the option to specify a host.
+
+Changing Dictionary~
+
+You can chance which dictionary to use with |g:victionary#dictionary|. There
+are currently 2 options, which you can set in your |.vimrc|: >
+
+        " Use WordNet
+        let g:victionary#dictionary = g:victionary#WORD_NET
+
+        " Use the Collaborative International Dictionary of English
+        let g:victionary#dictionary = g:victionary#GCIDE
+<
+==============================================================================
+2. Usage                                                      *victionary-usage*
+
+------------------------------------------------------------------------------
+2.1. Mappings                                              *victionary-mappings*
+
+<Plug>(victionary#define_prompt)              *<Plug>(victionary#define_prompt)*
+
+Prompts the user for a word to define
+
+
+<Plug>(victionary#define_under_cursor)  *<Plug>(victionary#define_under_cursor)*
+
+Defines the word currently under the cursor
+
+<Plug>(victionary#synonym_prompt)            *<Plug>(victionary#synonym_prompt)*
+
+Prompts the user for a word to get synonyms
+
+<Plug>(victionary#synonym_under_cursor)*<Plug>(victionary#synonym_under_cursor)*
+
+Get synonyms the word currently under the cursor
+
+By default, the hotkeys for triggering each mapping are:
+
+|    Hotkey   |                 Mapping                   |
+___________________________________________________________
+| `<Leader>d`   | `<Plug>(victionary#define_prompt)`          |
+| `<Leader>D`   | `<Plug>(victionary#define_under_cursor)`    |
+| `<Leader>s`   | `<Plug>(victionary#synonym_prompt)`         |
+| `<Leader>S`   | `<Plug>(victionary#synonym_under_cursor)`   |
+
+If you'd like to disable the default mappings, add this to your |.vimrc|: >
+
+        let g:victionary#map_defaults = 0
+<
+
+If you'd like to customize the mappings, add this to your |.vimrc|: >
+
+        let g:victionary#map_defaults = 0
+        nmap <mapping> <Plug>(victionary#define_prompt)
+        nmap <mapping> <Plug>(victionary#define_under_cursor)
+        nmap <mapping> <Plug>(victionary#synonym_prompt)
+        nmap <mapping> <Plug>(victionary#synonym_under_cursor)
+<
+------------------------------------------------------------------------------
+2.2. Commands                                              *victionary-commands*
+
+:VictionaryDefine [word]                                     *:VictionaryDefine*
+
+Takes a word as a parameter to define
+
+
+:VictionarySynonym [word]                                   *:VictionarySynonym*
+
+Takes a word as a parameter to get synonyms
+
+
+Looking up a word will open a horizontal split at the bottom, simply press q
+to close the window.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:noet:nospell:expandtab
