@@ -29,7 +29,7 @@ module Dict
 
   # Default host.
   DEFAULT_HOST = "www.dict.org"
-  
+
   # Default port.
   DEFAULT_PORT = 2628
 
@@ -47,7 +47,7 @@ module Dict
   MATCH_DEFAULT = "."
   MATCH_EXACT   = "exact"
   MATCH_PREFIX  = "prefix"
-  
+
   # The various response numbers.
   RESPONSE_DATABASES_FOLLOW    = 110
   RESPONSE_STRATEGIES_FOLLOW   = 111
@@ -62,7 +62,7 @@ module Dict
   RESPONSE_NO_MATCH            = 552
   RESPONSE_NO_DATABASES        = 554
   RESPONSE_NO_STRATEGIES       = 555
-  
+
   # Get the reply code of the passed text.
   def replyCode( text, default = nil )
 
@@ -73,12 +73,12 @@ module Dict
     else
       raise DictError.new(), "Invalid reply from host \"#{text}\"."
     end
-    
+
   end
 
   # replyCode should be private.
   private :replyCode
-  
+
 end
 
 ############################################################################
@@ -94,7 +94,7 @@ class DictDefinition < Array
 
   # Mixin the Dict utility code.
   include Dict
-  
+
   # Constructor
   def initialize( details, conn )
 
@@ -113,7 +113,7 @@ class DictDefinition < Array
     end
 
   end
-  
+
   # Access to the word
   def word
     @word
@@ -142,7 +142,7 @@ class DictDefinitionList < Array
 
   # Mixin the Dict utility code.
   include Dict
-  
+
   # Constructor
   def initialize( conn )
 
@@ -156,7 +156,7 @@ class DictDefinitionList < Array
     end
 
   end
-  
+
 end
 
 ############################################################################
@@ -179,7 +179,7 @@ class DictArray < Array
     end
 
   end
-  
+
 end
 
 ############################################################################
@@ -202,7 +202,7 @@ class DictArrayItem
   def description
     @description
   end
-  
+
 end
 
 ############################################################################
@@ -252,7 +252,7 @@ class DictClient < DictBase
 
   # checkConnection should be private.
   private :checkConnection
-  
+
   # Send text to the server
   def send( text )
     checkConnection()
@@ -261,7 +261,7 @@ class DictClient < DictBase
 
   # send should be private.
   private :send
-  
+
   # Connect to the host.
   def connect
 
@@ -273,7 +273,7 @@ class DictClient < DictBase
 
       # Nope, open a connection
       @conn = TCPSocket.open( host, port )
-      
+
       # Get the banner.
       @banner = @conn.readline()
 
@@ -287,10 +287,10 @@ class DictClient < DictBase
       unless replyCode( reply = @conn.readline() ) == RESPONSE_OK
         raise DictError.new(), "Client announcement failed \"#{reply}\""
       end
-      
+
       # If we were passed a block, yield to it
       yield self if block_given?
-      
+
     end
 
   end
@@ -335,12 +335,12 @@ class DictClient < DictBase
       # Something else, throw an error.
       raise DictError.new(), reply
     end
-    
+
   end
 
   # arrayCommand is private.
   private :arrayCommand
-  
+
   # Define a word.
   def define( word, database = DB_ALL )
     arrayCommand( "define #{database} \"#{word}\"", DictDefinitionList, RESPONSE_DEFINITIONS_FOLLOW, RESPONSE_NO_MATCH )
@@ -375,7 +375,7 @@ class DictClient < DictBase
   def help
     arrayCommand( "help", DictArray, RESPONSE_HELP_FOLLOWS )
   end
-  
+
 end
 
 ############################################################################
@@ -387,7 +387,7 @@ if $0 == __FILE__
 
   # Command result
   result = 1
-  
+
   # Setup the default parameters.
   $params = {
     :host       => ENV[ "DICT_HOST" ]  || Dict::DEFAULT_HOST,
@@ -508,38 +508,37 @@ Ave, Cambridge, MA 02139, USA.
 
       # With a dict client...
       DictClient.new( $params[ :host ], $params[ :port ] ).connect() do |dc|
-        
+
         # User wants to see a list of databases?
         printList( "Databases", dc.databases ) if $params[ :dbs ]
-        
+
         # User wants to see a list of strategies?
         printList( "Strategies", dc.strategies ) if $params[ :strats ]
-        
+
         # User wants to see the server help?
         printList( "Server help", dc.help ) if $params[ :serverhelp ]
-        
+
         # User wants to see help on a database?
         printList( "Info for #{$params[ :info ]}", dc.info( $params[ :info ] ) ) if $params[ :info ]
-        
+
         # User wants to see server information?
         printList( "Server information", dc.server ) if $params[ :serverinfo ]
-        
+
         # Look up any words left on the command line.
         ARGV.each do |word|
-          
-          
+
           # Did the user require a match?
           if $params[ :match ]
-            
+
             # Yes, display matches.
             if ( matches = dc.match( word, $params[ :strategy ], $params[ :database ] ) ).empty?
               print "No matches found\n"
             else
               matches.each {|wm| print "Database: \"#{wm.name}\" Match: \"#{wm.description}\"\n" }
             end
-            
+
           else
-            
+
             # No, display definitions.
             if ( defs = dc.define( word, $params[ :database ] ) ).empty?
               print "No definitions found\n"
@@ -548,19 +547,19 @@ Ave, Cambridge, MA 02139, USA.
                 wd.each {|line| print line + "\n" }
               end
             end
-            
+
           end
-          
+
         end
-        
+
         # Disconnect.
         dc.disconnect()
-      
+
       end
 
       # If we made it this far everything should have worked.
       result = 0
-      
+
     rescue SocketError => e
       print "Error connecting to server: #{e}\n"
     rescue DictError => e
@@ -573,7 +572,7 @@ Ave, Cambridge, MA 02139, USA.
 
   # Return the result to the caller.
   exit result
-  
+
 end
 
 ### dict.rb ends here

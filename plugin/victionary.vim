@@ -2,16 +2,15 @@
 " Vim plugin for looking up words in an online dictionary (ie. WordNet)
 " A fork of the vim-online-thesaurus plugin
 " Author:	Jose Francisco Taas
-" Version: 0.1.0
+" Version: 1.0.0
 " Credits to both Anton Beloglazov and Nick Coleman: original idea and code
 " And to Dave Pearson: RFC 2229 client for ruby
 " NOTE: This is a very hackish implementation since I didn't originally
 " plan on sharing the code. It could also be because I'm a piss-poor coder.
 " =========================================================================
-if exists("g:loaded_victionary")
+if exists("g:victionary#loaded")
 	finish
 endif
-let g:loaded_victionary = 1
 
 let s:path = expand('<sfile>:p:h')
 let s:dictpath = s:path . '/dict.rb'
@@ -50,12 +49,18 @@ function! s:WordPrompt()
 	call s:Lookup(word)
 endfunction
 
-if !exists('g:victionary_mapping')
-	let g:victionary_mapping = 1
+if !exists('g:victionary#map_defaults')
+	let g:victionary#map_defaults = 1
 endif
 
-if g:victionary_mapping
-	nnoremap <unique> <Leader>d :call <SID>WordPrompt()<CR>
+nnoremap <Plug>(victionary#word_prompt) :call <SID>WordPrompt()<Return>
+nnoremap <Plug>(victionary#under_cursor) :call <SID>Lookup('<C-r><C-w>')<Return>
+
+if g:victionary#map_defaults
+	nnoremap <unique> <Leader>d <Plug>(victionary#word_prompt)
+	nnoremap <unique> <Leader>D <Plug>(victionary#under_cursor)
 endif
 
 command! -nargs=1 Victionary :call <SID>Lookup(<f-args>)
+
+let g:victionary#loaded = 1
