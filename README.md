@@ -4,11 +4,27 @@ An easy to use dict client for Vim.
 
 ![img](https://github.com/farconics/victionary/wiki/images/demo.gif)
 
-# Requirements
+## Table of Contents
+
+<details>
+<summary>Click here to show.</summary>
+
+1. [Requirements](#requirements)
+2. [Installation](#installation)
+3. [Configuration](#configuration)
+    - [Changing Dictionary](#changing-dictionary)
+4. [Usage](#usage)
+    - [Mappings](#mappings)
+    - [Commands](#commands)
+5. [Examples](#examples)
+
+</details>
+
+## Requirements
 
 * `Vim compiled w/ Ruby 1.9.2 or greater`
 
-# Installation
+## Installation
 
 For easy installation, I highly suggest that you install a plugin manager (ie. Pathogen/Vundle/NeoBundle)
 
@@ -41,7 +57,7 @@ git clone https://github.com/farconics/victionary ~/.vim/bundle/victionary
 3. Run `:NeoUpdate`
 
 
-# Configuration
+## Configuration
 
 The plugin works out of the box, using 'dict.org' as the host and WordNet as
 the dictionary. I will try to add the option to specify a host.
@@ -59,7 +75,7 @@ let g:victionary#dictionary = g:victionary#WORD_NET
 let g:victionary#dictionary = g:victionary#GCIDE
 ```
 
-# Usage
+## Usage
 
 You can read the help docs for this plugin at any time with:
 
@@ -110,6 +126,7 @@ nmap <mapping> <Plug>(victionary#synonym_under_cursor)
 
 `:VictionaryDefine`
 * Takes a word as a parameter to define
+
 `:VictionarySynonym`
 * Takes a word as a parameter to get synonyms
 
@@ -117,7 +134,7 @@ nmap <mapping> <Plug>(victionary#synonym_under_cursor)
 Looking up a word will open a horizontal split at the bottom, simply press q
 to close the window.
 
-# Examples
+## Examples
 
 ![img](https://github.com/farconics/victionary/wiki/images/demo2.gif)
 
