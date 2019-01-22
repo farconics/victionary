@@ -1,8 +1,8 @@
 " =========================================================================
-" Vim plugin for looking up words in an online dictionary (ie. WordNet)
+" Vim plugin for looking up word in an online dictionary (ie. WordNet)
 " A fork of the vim-online-thesaurus plugin
 " Author:	Jose Francisco Taas, Evan Quan
-" Version: 3.1.0
+" Version: 3.2.0
 " Credits to both Anton Beloglazov and Nick Coleman: original idea and code
 " And to Dave Pearson: RFC 2229 client for ruby
 " NOTE: This is a very hackish implementation since I didn't originally
@@ -22,6 +22,14 @@ if !exists("g:victionary#format_results")
 	let g:victionary#format_results = 1
 endif
 
+if !exists("g:victionary#visible_results")
+	let g:victionary#visible_results = 1
+endif
+
+if !exists("g:victionary#dictionary")
+	let g:victionary#dictionary = g:victionary#WORD_NET
+endif
+
 let s:thesaurus = "moby-thesaurus"
 
 let s:dictionary_names = {
@@ -30,9 +38,6 @@ let s:dictionary_names = {
                           \ s:thesaurus           : "Moby Thesaurus",
                           \}
 
-if !exists("g:victionary#dictionary")
-	let g:victionary#dictionary = g:victionary#WORD_NET
-endif
 
 function! s:GetThesaurus()
 	return s:thesaurus
@@ -50,7 +55,7 @@ ruby << EOF
 	@buffer = VIM::Buffer.current
 	resizeTo = VIM::evaluate("line('$')") + 1
 	for i in 1..@buffer.count
-		if @buffer[i].include? "2:"
+		if @buffer[i].include? (VIM::evaluate("g:victionary#visible_results") + 1).to_s + ":"
 			resizeTo = i
 			break
 		end
