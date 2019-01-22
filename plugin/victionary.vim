@@ -1,8 +1,9 @@
 " =========================================================================
 " Vim plugin for looking up words in an online dictionary (ie. WordNet)
 " A fork of the vim-online-thesaurus plugin
-" Author:	Jose Francisco Taas, Evan Quan
-" Version: 3.2.0
+" Author:     Jose Francisco Taas, Evan Quan
+" Maintainer: https://github.com/farconics/victionary
+" Version:    3.2.1
 " Credits to both Anton Beloglazov and Nick Coleman: original idea and code
 " And to Dave Pearson: RFC 2229 client for ruby
 " NOTE: This is a very hackish implementation since I didn't originally
@@ -28,6 +29,7 @@ endif
 
 if !exists("g:victionary#dictionary")
 	let g:victionary#dictionary = g:victionary#WORD_NET
+	" let g:victionary#dictionary = g:victionary#GCIDE
 endif
 
 let s:thesaurus = "moby-thesaurus"
