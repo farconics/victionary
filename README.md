@@ -16,6 +16,7 @@ An easy to use dict client for Vim.
 4. [Usage](#usage)
     - [Mappings](#mappings)
     - [Commands](#commands)
+    - [Variables](#variables)
 5. [Examples](#examples)
 
 </details>
@@ -134,6 +135,23 @@ nmap <mapping> <Plug>(victionary#synonym_under_cursor)
 
 Looking up a word will open a horizontal split at the bottom, simply press q
 to close the window.
+
+### Variables
+
+`g:victionary#format_results`
+
+Type: `Number`
+
+Default: `1`
+
+If this variable is set to a non-zero value, then the results are formatted to
+remove visual clutter. This includes disabling 'number', `relativenumber`,
+`listchars`, and `colorcolumn`, while enabling `cursorline` for visual
+distinction. If you like to have the results window to be unaltered, add the
+following to your `.vimrc`:
+```vim
+let g:victionary#format_results = 0
+```
 
 ## Examples
 
