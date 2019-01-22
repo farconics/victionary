@@ -1,5 +1,5 @@
 " =========================================================================
-" Vim plugin for looking up word in an online dictionary (ie. WordNet)
+" Vim plugin for looking up words in an online dictionary (ie. WordNet)
 " A fork of the vim-online-thesaurus plugin
 " Author:	Jose Francisco Taas, Evan Quan
 " Version: 3.2.0
