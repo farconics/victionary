@@ -1,7 +1,7 @@
 " ============================================================================
 " File: victionary.vim
 " Maintainer: https://github.com/farconics/victionary/
-" Version: 0.1.1
+" Version: 0.1.2
 "
 " Syntax highlighting for victionary results.
 "
@@ -18,12 +18,12 @@ syntax match vdDefitionNumber /[1-9]\+\:/
 syntax keyword vdAntonyms ant
 syntax keyword vdSynonyms syn
 
-syntax region vdAdjective start=/^    adj/ end=/ / contains=CONTAINED keepend
-syntax region vdAdverb start=/^    adv/ end=/ / contains=CONTAINED keepend
-syntax region vdNoun start=/^    n/ end=/ / contains=CONTAINED keepend
-syntax region vdQuote start=/"/ end=/"/ contains=CONTAINED keepend
-syntax region vdSynonym start=/{/ end=/}/ contains=CONTAINED keepend
-syntax region vdVerb start=/^    v/ end=/ / contains=CONTAINED keepend
+syntax region vdAdjective start=/^    adj/ end=/ /
+syntax region vdAdverb start=/^    adv/ end=/ /
+syntax region vdNoun start=/^    n/ end=/ /
+syntax region vdQuote start=/"/ end=/"/
+syntax region vdSynonym start=/{/ end=/}/
+syntax region vdVerb start=/^    v/ end=/ /
 syntax region vdWord start=/^Word:/ end=/$/ contains=CONTAINED keepend
 
 highlight link vdAdjective Type
