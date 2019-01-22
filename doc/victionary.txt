@@ -1,4 +1,4 @@
-*victionary.txt*        For Vim version 8.1         Last change: 2019 January 19
+*victionary.txt*        For Vim version 8.1         Last change: 2019 January 21
 
                  _   _ _      _   _                                            ~
                 | | | (_)    | | (_)                                           ~
@@ -21,6 +21,7 @@ CONTENTS                                                   *victionary-contents*
     3. Usage............................|victionary-usage|
         3.1. Mappings...................|victionary-mappings|
         3.2. Commands...................|victionary-commands|
+        3.3. Variables..................|victionary-variables|
 
 ==============================================================================
 1. Introduction                                        *victionary-introduction*
@@ -109,5 +110,21 @@ Takes a word as a parameter to get synonyms
 Looking up a word will open a horizontal split at the bottom, simply press q
 to close the window.
 
+------------------------------------------------------------------------------
+3.3. Variables                                            *victionary-variables*
+
+g:victionary#format_results                        *g:victionary#format_results*
+
+Type: |Number|
+Default: `1`
+
+If this variable is set to a non-zero value, then the results are formatted to
+remove visual clutter. This includes disabling 'number', 'relativenumber',
+'listchars', and 'colorcolumn', while enabling 'cursorline' for visual
+distinction. If you like to have the results window to be unaltered, add the
+following to your |.vimrc|: >
+
+        let g:victionary#format_results = 0
+<
 ==============================================================================
 vim:tw=78:ts=8:ft=help:noet:nospell:expandtab

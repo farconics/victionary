@@ -2,7 +2,7 @@
 " Vim plugin for looking up words in an online dictionary (ie. WordNet)
 " A fork of the vim-online-thesaurus plugin
 " Author:	Jose Francisco Taas, Evan Quan
-" Version: 3.0.0
+" Version: 3.1.0
 " Credits to both Anton Beloglazov and Nick Coleman: original idea and code
 " And to Dave Pearson: RFC 2229 client for ruby
 " NOTE: This is a very hackish implementation since I didn't originally
@@ -18,17 +18,20 @@ let s:dictpath = s:path . '/dict.rb'
 let g:victionary#WORD_NET = "wn"
 let g:victionary#GCIDE = "gcide"
 
+if !exists("g:victionary#format_results")
+	let g:victionary#format_results = 1
+endif
+
 let s:thesaurus = "moby-thesaurus"
 
 let s:dictionary_names = {
-                       \ g:victionary#WORD_NET : "WordNet",
-                       \ g:victionary#GCIDE : "GCIDE",
-                       \ s:thesaurus : "Moby Thesaurus",
-                       \}
+                          \ g:victionary#WORD_NET : "WordNet",
+                          \ g:victionary#GCIDE    : "GCIDE",
+                          \ s:thesaurus           : "Moby Thesaurus",
+                          \}
 
 if !exists("g:victionary#dictionary")
-	let g:victionary#dictionary =  g:victionary#WORD_NET
-	" let g:victionary#dictionary =  g:victionary#GCIDE
+	let g:victionary#dictionary = g:victionary#WORD_NET
 endif
 
 function! s:GetThesaurus()
@@ -42,7 +45,7 @@ function! s:Lookup(word, dictionary)
 	1,$d
 	echo "Fetching " . a:word . " from the " . s:dictionary_names[a:dictionary] . " dictionary..."
 	exec "silent 0r !" . s:dictpath . " -d " . a:dictionary . " " . a:word
-	normal! ggiWord: 
+	normal! ggiWord:
 ruby << EOF
 	@buffer = VIM::Buffer.current
 	resizeTo = VIM::evaluate("line('$')") + 1
@@ -54,7 +57,11 @@ ruby << EOF
 	end
 	VIM.command("resize #{resizeTo - 1}")
 EOF
-	nnoremap <silent> <buffer> q :q<CR>
+	nnoremap <silent> <buffer> q :q<Return>
+	if g:victionary#format_results
+		setlocal nonumber norelativenumber showbreak="" nolist
+		setlocal cursorline colorcolumn=""
+	endif
 	setlocal nomodifiable filetype=victionary
 endfunction
 
