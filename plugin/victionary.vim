@@ -48,7 +48,7 @@ function! s:Lookup(word, dictionary)
 	normal! ggiWord:
 
 	let l:resizeTo = line('$') + 1
-	let l:l = search('2:', 'n')
+	let l:l = search('^\s*2[:.]', 'n')
 	if l:l > 0
 		let l:resizeTo = l:l
 	endif
