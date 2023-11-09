@@ -41,6 +41,8 @@ function! s:GetThesaurus()
 endfunction
 
 function! s:Lookup(word, dictionary)
+	let l:curwin = winnr()
+
 	let l:wordwin = bufwinnr(get(s:, 'buf', -1))
 	if l:wordwin > 0
 		exec l:wordwin . ' wincmd w'
@@ -78,7 +80,8 @@ EOF
 	endif
 	setlocal nomodifiable filetype=victionary
 
-	unlet! l:wordwin
+	exec l:curwin . ' wincmd w'
+	unlet! l:curwin l:wordwin
 endfunction
 
 function! s:WordPrompt(prompt, dictionary)
