@@ -18,6 +18,8 @@ let s:dictpath = s:path . '/dict.rb'
 let g:victionary#WORD_NET = "wn"
 let g:victionary#GCIDE = "gcide"
 
+let s:buf = -1
+
 if !exists("g:victionary#format_results")
 	let g:victionary#format_results = 1
 endif
@@ -39,13 +41,23 @@ function! s:GetThesaurus()
 endfunction
 
 function! s:Lookup(word, dictionary)
-	silent keepalt belowright split victionary
+	let l:wordwin = bufwinnr(get(s:, 'buf', -1))
+	if l:wordwin > 0
+		exec l:wordwin . ' wincmd w'
+	else
+		silent keepalt belowright split victionary
+		let s:buf = bufnr()
+	endif
+
 	setlocal noswapfile nobuflisted nospell nowrap modifiable
 	setlocal buftype=nofile bufhidden=hide
 	1,$d
+
 	echo "Fetching " . a:word . " from the " . s:dictionary_names[a:dictionary] . " dictionary..."
 	exec "silent 0r !" . s:dictpath . " -d " . a:dictionary . " " . a:word
 	normal! ggiWord:
+
+	if l:wordwin <= 0
 ruby << EOF
 	@buffer = VIM::Buffer.current
 	resizeTo = VIM::evaluate("line('$')") + 1
@@ -57,12 +69,16 @@ ruby << EOF
 	end
 	VIM.command("resize #{resizeTo - 1}")
 EOF
+	endif
+
 	nnoremap <silent> <buffer> q :q<Return>
 	if g:victionary#format_results
 		setlocal nonumber norelativenumber showbreak="" nolist
 		setlocal cursorline colorcolumn=""
 	endif
 	setlocal nomodifiable filetype=victionary
+
+	unlet! l:wordwin
 endfunction
 
 function! s:WordPrompt(prompt, dictionary)
