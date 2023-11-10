@@ -43,7 +43,7 @@ function! s:Lookup(word, dictionary)
 	setlocal noswapfile nobuflisted nospell nowrap modifiable
 	setlocal buftype=nofile bufhidden=hide
 	1,$d
-	echo "Fetching " . a:word . " from the " . s:dictionary_names[a:dictionary] . " dictionary..."
+	echo "Fetching " . a:word . " from the " . get(s:dictionary_names, a:dictionary, a:dictionary) . " dictionary..."
 	exec "silent 0r !" . s:dictpath . " -d " . a:dictionary . " " . a:word
 	normal! ggiWord:
 ruby << EOF
