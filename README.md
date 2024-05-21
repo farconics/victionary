@@ -153,6 +153,48 @@ following to your `.vimrc`:
 let g:victionary#format_results = 0
 ```
 
+`g:victionary#visible_results`
+
+Type: `Number`
+
+Default: `1`
+
+This sets the maximum number of results immediately visible when a word's
+definition is searched for. The results window resizes to match the number of
+results set to be visible.
+
+For example, for the definition results of the word "number", if
+`g:victionary#visible_results` is set to `1`, then the results would resize to
+fit only the first definition:
+
+```
+Word:number
+    n 1: the property possessed by a sum or total or indefinite
+         quantity of units or individuals; "he had a number of
+         chores to do"; "the number of parameters is small"; "the
+         figure was about a thousand" [syn: {number}, {figure}]
+```
+
+If set to `3`, the window would resize to fit the first three definitions,
+which would take up more space:
+
+```
+Word:number
+    n 1: the property possessed by a sum or total or indefinite
+         quantity of units or individuals; "he had a number of
+         chores to do"; "the number of parameters is small"; "the
+         figure was about a thousand" [syn: {number}, {figure}]
+    2: a concept of quantity involving zero and units; "every number
+       has a unique position in the sequence"
+    3: a short theatrical performance that is part of a longer
+       program; "he did his act three times every evening"; "she had
+       a catchy little routine"; "it was one of the best numbers he
+       ever did" [syn: {act}, {routine}, {number}, {turn}, {bit}]
+```
+
+In all cases, the user can still scroll down to see more definitions, but the
+window will maintain its initial size.
+
 ## Examples
 
 ![img](https://github.com/farconics/victionary/wiki/images/demo2.gif)
