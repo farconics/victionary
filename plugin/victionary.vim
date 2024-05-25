@@ -44,7 +44,7 @@ function! s:Lookup(word, dictionary)
 	setlocal buftype=nofile bufhidden=hide
 	1,$d
 	echo "Fetching " . a:word . " from the " . get(s:dictionary_names, a:dictionary, a:dictionary) . " dictionary..."
-	exec "silent 0r !" . s:dictpath . " -d " . a:dictionary . " " . a:word
+	exec "silent 0r !" . s:dictpath . " -d '" . substitute(a:dictionary, "'", "''", 'g') . "' '" . substitute(a:word, "'", "''", 'g') . "'"
 	normal! ggiWord:
 
 	let l:resizeTo = line('$') + 1
