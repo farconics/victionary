@@ -46,17 +46,15 @@ function! s:Lookup(word, dictionary)
 	echo "Fetching " . a:word . " from the " . get(s:dictionary_names, a:dictionary, a:dictionary) . " dictionary..."
 	exec "silent 0r !" . s:dictpath . " -d " . a:dictionary . " " . a:word
 	normal! ggiWord:
-ruby << EOF
-	@buffer = VIM::Buffer.current
-	resizeTo = VIM::evaluate("line('$')") + 1
-	for i in 1..@buffer.count
-		if @buffer[i].include? "2:"
-			resizeTo = i
-			break
-		end
-	end
-	VIM.command("resize #{resizeTo - 1}")
-EOF
+
+	let l:resizeTo = line('$') + 1
+	let l:l = search('^\s*2[:.]', 'n')
+	if l:l > 0
+		let l:resizeTo = l:l
+	endif
+	exec 'resize ' . (l:resizeTo - 1)
+	unlet! l:l l:resizeTo
+
 	nnoremap <silent> <buffer> q :q<Return>
 	if g:victionary#format_results
 		setlocal nonumber norelativenumber showbreak="" nolist
