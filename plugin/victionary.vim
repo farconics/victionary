@@ -18,6 +18,8 @@ let s:dictpath = s:path . '/dict.rb'
 let g:victionary#WORD_NET = "wn"
 let g:victionary#GCIDE = "gcide"
 
+let s:buf = -1
+
 if !exists("g:victionary#format_results")
 	let g:victionary#format_results = 1
 endif
@@ -39,21 +41,31 @@ function! s:GetThesaurus()
 endfunction
 
 function! s:Lookup(word, dictionary)
-	silent keepalt belowright split victionary
+	let l:wordwin = bufwinnr(get(s:, 'buf', -1))
+	if l:wordwin > 0
+		exec l:wordwin . ' wincmd w'
+	else
+		silent keepalt belowright split victionary
+		let s:buf = bufnr()
+	endif
+
 	setlocal noswapfile nobuflisted nospell nowrap modifiable
 	setlocal buftype=nofile bufhidden=hide
 	1,$d
+
 	echo "Fetching " . a:word . " from the " . get(s:dictionary_names, a:dictionary, a:dictionary) . " dictionary..."
 	exec "silent 0r !" . s:dictpath . " -d '" . substitute(a:dictionary, "'", "''", 'g') . "' '" . substitute(a:word, "'", "''", 'g') . "'"
 	normal! ggiWord:
 
-	let l:resizeTo = line('$') + 1
-	let l:l = search('^\s*2[:.]', 'n')
-	if l:l > 0
-		let l:resizeTo = l:l
+	if l:wordwin <= 0
+		let l:resizeTo = line('$') + 1
+		let l:l = search('^\s*2[:.]', 'n')
+		if l:l > 0
+			let l:resizeTo = l:l
+		endif
+		exec 'resize ' . (l:resizeTo - 1)
+		unlet! l:l l:resizeTo
 	endif
-	exec 'resize ' . (l:resizeTo - 1)
-	unlet! l:l l:resizeTo
 
 	nnoremap <silent> <buffer> q :q<Return>
 	if g:victionary#format_results
@@ -61,6 +73,8 @@ function! s:Lookup(word, dictionary)
 		setlocal cursorline colorcolumn=""
 	endif
 	setlocal nomodifiable filetype=victionary
+
+	unlet! l:wordwin
 endfunction
 
 function! s:WordPrompt(prompt, dictionary)
